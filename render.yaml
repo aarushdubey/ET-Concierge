@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: et-concierge
+    runtime: node
+    repo: https://github.com/aarushdubey/ET-Concierge
+    branch: main
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NVIDIA_API_KEY
+        sync: false
+      - key: NODE_ENV
+        value: production
