@@ -161,6 +161,7 @@ export async function POST(request) {
     let displayContent = content;
     let profileUpdate = null;
 
+    // Try XML-tagged format first
     const profileMatch = content.match(
       /<PROFILE_UPDATE>\s*([\s\S]*?)\s*<\/PROFILE_UPDATE>/
     );
@@ -175,6 +176,26 @@ export async function POST(request) {
         console.error("Failed to parse profile update:", e);
       }
     }
+
+    // Fallback: try to find a JSON block with investorType key (LLM sometimes skips tags)
+    if (!profileUpdate) {
+      const jsonMatch = content.match(/\{[\s\S]*?"investorType"[\s\S]*?\}(?=\s*$)/);
+      if (jsonMatch) {
+        try {
+          profileUpdate = JSON.parse(jsonMatch[0]);
+          displayContent = content.replace(jsonMatch[0], "").trim();
+        } catch (e) {
+          // Not valid JSON, ignore
+        }
+      }
+    }
+
+    // Clean up any remaining PROFILE_UPDATE text from display
+    displayContent = displayContent
+      .replace(/PROFILE_UPDATE\s*remains the same[^.]*\.?/gi, "")
+      .replace(/PROFILE_UPDATE/gi, "")
+      .replace(/```json[\s\S]*?```/g, "")
+      .trim();
 
     return NextResponse.json({
       message: displayContent,

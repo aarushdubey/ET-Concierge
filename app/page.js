@@ -464,7 +464,15 @@ export default function Home() {
 function formatMessageContent(content) {
   if (!content) return "";
 
-  let html = content
+  // Clean up any leaked PROFILE_UPDATE content
+  let cleaned = content
+    .replace(/<PROFILE_UPDATE>[\s\S]*?<\/PROFILE_UPDATE>/gi, "")
+    .replace(/PROFILE_UPDATE\s*remains the same[^.]*\.?/gi, "")
+    .replace(/PROFILE_UPDATE[\s\S]*$/gi, "")
+    .replace(/\{[\s\S]*?"investorType"[\s\S]*?\}/g, "")
+    .trim();
+
+  let html = cleaned
     // Escape HTML
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
