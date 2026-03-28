@@ -31,7 +31,7 @@
 
 <!-- TABLE OF CONTENTS -->
 <details>
-  <summary> 📑 Table of Contents</summary>
+  <summary>  Table of Contents</summary>
   <ol>
     <li><a href="#the-problem">The Problem — 14 Crore Users, Low Discovery</a></li>
     <li><a href="#who-we-build-for">Who We Build For — Persona Stories</a></li>
@@ -48,7 +48,7 @@
 ---
 
 <!-- THE PROBLEM -->
-## 🚨 The Problem — 14 Crore Users, Low Discovery <a name="the-problem"></a>
+##  The Problem — 14 Crore Users, Low Discovery <a name="the-problem"></a>
 
 India has over **14 crore demat account holders**, representing a massive base of retail investors. Yet, when navigating a dense financial ecosystem like The Economic Times, most users suffer from choice paralysis. 
 
@@ -67,7 +67,7 @@ Users are bombarded with generic mutual fund recommendations, irrelevant insuran
 ---
 
 <!-- WHO WE BUILD FOR -->
-## 👤 Who We Build For — Persona Stories <a name="who-we-build-for"></a>
+##  Who We Build For — Persona Stories <a name="who-we-build-for"></a>
 
 ### Primary Persona: Siddharth
 
@@ -82,7 +82,7 @@ He logs onto financial portals and sees ads for high-risk small-cap funds and co
 ---
 
 <!-- THE SOLUTION -->
-## 💡 The Solution — Your Financial Twin <a name="the-solution"></a>
+##  The Solution — Your Financial Twin <a name="the-solution"></a>
 
 ET Concierge is the **first AI-powered Financial Twin** for The Economic Times. It replaces static dashboards with a conversation-led digital replica of your financial life.
 
@@ -96,7 +96,7 @@ ET Concierge is the **first AI-powered Financial Twin** for The Economic Times. 
 ---
 
 <!-- HOW IT WORKS -->
-## ⚙️ How It Works — Core Mechanics <a name="how-it-works"></a>
+##  How It Works — Core Mechanics <a name="how-it-works"></a>
 
 ```text
 STEP 1: NATURAL CONVERSATION 
@@ -127,9 +127,9 @@ STEP 4: PROACTIVE NUDGES (Background)
 ---
 
 <!-- KILLER FEATURES -->
-## 🔥 3 Killer Features (No Competitor Has These) <a name="killer-features"></a>
+##  3 Killer Features (No Competitor Has These) <a name="killer-features"></a>
 
-### 🧬 1. Dynamic Financial Twin
+###  1. Dynamic Financial Twin
 The concierge builds a persistent JSON model of your financial personality that powers *every* recommendation:
 ```json
 {
@@ -140,16 +140,16 @@ The concierge builds a persistent JSON model of your financial personality that 
 }
 ```
 
-### 😰 2. Emotion-Aware AI
+###  2. Emotion-Aware AI
 The AI doesn't just read words; it reads sentiment and adapts its entire recommendation engine:
 
 | User Expresses | Detected Emotion | AI Persona Mode |
 |---|---|---|
-| "Should I panic sell? Markets are crashing!" | Panic | 🟢 **Calming Mode** (Recommends stable bonds) |
-| "My friend made 200% on this crypto, should I buy?" | FOMO | 🟠 **FOMO-Guard** (Prompts risk-assessment) |
-| "I've been investing for 10 years, show me options."| Confidence | 🟡 **Challenge Mode** (Shows advanced ET tools) |
+| "Should I panic sell? Markets are crashing!" | Panic |  **Calming Mode** (Recommends stable bonds) |
+| "My friend made 200% on this crypto, should I buy?" | FOMO |  **FOMO-Guard** (Prompts risk-assessment) |
+| "I've been investing for 10 years, show me options."| Confidence |  **Challenge Mode** (Shows advanced ET tools) |
 
-### 🔇 3. Silence Intelligence
+###  3. Silence Intelligence
 Most recommendation engines learn from clicks. We learn from what you **ignore**. If the AI suggests Mutual Funds twice and you change the subject both times, it autonomously updates your Twin to deprioritize Mutual Funds, achieving near-100% relevance.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -157,7 +157,7 @@ Most recommendation engines learn from clicks. We learn from what you **ignore**
 ---
 
 <!-- AI INTEGRATION -->
-## 🧠 AI Integration — The Multi-Agent Engine <a name="ai-integration"></a>
+##  AI Integration — The Multi-Agent Engine <a name="ai-integration"></a>
 
 ET Concierge's backend uses a sophisticated prompt architecture powered by **NVIDIA AI (Llama 3.1 70B)**.
 
@@ -181,7 +181,7 @@ graph TD
 ---
 
 <!-- TECH STACK -->
-## 🛠️ Tech Stack <a name="tech-stack"></a>
+##  Tech Stack <a name="tech-stack"></a>
 
 | Layer | Technology | Purpose |
 |---|---|---|
@@ -197,7 +197,7 @@ graph TD
 ---
 
 <!-- GETTING STARTED -->
-## 🚀 Getting Started <a name="getting-started"></a>
+##  Getting Started <a name="getting-started"></a>
 
 Run ET Concierge locally in 3 steps:
 
@@ -235,7 +235,7 @@ Run ET Concierge locally in 3 steps:
 ---
 
 <!-- IMPACT -->
-## 📈 Business Impact <a name="impact"></a>
+##  Business Impact <a name="impact"></a>
 
 ET Concierge directly translates hyper-personalization into hard revenue metrics for the Economic Times ecosystem:
 
