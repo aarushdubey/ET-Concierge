@@ -6,6 +6,36 @@
     "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
     "createdAt": "2026-03-26T17:03:53.151Z",
     "financialTwin": {
+      "age": 21,
+      "income": 5000000,
+      "city": null,
+      "profession": null,
+      "riskPsychology": "Aggressive",
+      "spendingPersonality": null,
+      "knowledgeLevel": null,
+      "emotionalTriggers": [],
+      "insuranceGap": null,
+      "emergencyFundMonths": null,
+      "investmentStyle": null,
+      "lifeStage": null,
+      "goalTimeline": null
+    }
+  },
+  {
+    "id": "1774709218385lm7gunf",
+    "name": "Test Agent",
+    "email": "agent_test@google.com",
+    "passwordHash": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+    "createdAt": "2026-03-28T14:46:58.385Z",
+    "financialTwin": null
+  },
+  {
+    "id": "1774711040521jqjkn15",
+    "name": "Test User",
+    "email": "test2@test.com",
+    "passwordHash": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+    "createdAt": "2026-03-28T15:17:20.522Z",
+    "financialTwin": {
       "age": null,
       "income": null,
       "city": null,

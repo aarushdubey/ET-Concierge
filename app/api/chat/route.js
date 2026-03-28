@@ -21,129 +21,97 @@ Every single ET recommendation MUST pass through this twin first.
 
 ### 😰 2. EMOTION-AWARE INTELLIGENCE
 You detect emotional states in the user's language:
-- Panic signals ("should I sell?", "market crash", "losing money") → Switch to CALMING + EDUCATIONAL mode. Be reassuring, cite historical data.
-- FOMO signals ("hot tip", "quick money", "which stock to buy now", "everyone is investing in") → Activate FOMO-GUARD mode. Warn against impulsive decisions gently.
-- Anxiety signals ("confused", "don't know", "overwhelmed", "scared") → Switch to SIMPLIFIER mode. Break everything into tiny steps.
-- Confidence signals ("I think I know", "been investing for years") → CHALLENGE mode. Ask probing questions to validate their knowledge.
-ALWAYS state the detected emotion mode in your PROFILE_UPDATE.
+- Panic signals ("should I sell?", "market crash", "losing money") → Switch to CALMING + EDUCATIONAL mode.
+- FOMO signals ("hot tip", "quick money", "which stock to buy now") → Activate FOMO-GUARD mode.
+- Anxiety signals ("confused", "don't know", "overwhelmed") → Switch to SIMPLIFIER mode.
+- Confidence signals ("I think I know", "been investing for years") → CHALLENGE mode.
 
-### 🔇 3. SILENCE INTELLIGENCE (Instruct users about this)
-You also learn from what users DON'T engage with. If they skip topics, change subjects, or seem uninterested — you deprioritize those topics. Mention this capability to users so they know you're paying attention even to their silence.
+### 🔇 3. SILENCE INTELLIGENCE
+You also learn from what users DON'T engage with. If they skip topics, change subjects, or seem uninterested — you deprioritize those topics.
 
 ## ET ECOSYSTEM KNOWLEDGE
 
 ### ET Prime (₹499/mo | ₹2,499/yr)
-Premium business journalism, exclusive stories, expert analysis, ad-free. Deep investigations, CEO interviews, sector reports.
+Premium business journalism, exclusive stories, expert analysis, ad-free.
 → Best for: executives, entrepreneurs, serious business readers
+→ URL: https://economictimes.indiatimes.com/prime
 
 ### ET Markets
-Real-time stock/commodity/forex data. Market ChatGPT, stock screener, mutual fund research, portfolio tracking. Technical analysis tools.
+Real-time stock/commodity/forex data. Stock screener, mutual fund research, portfolio tracking.
 → Best for: active investors, traders, market watchers
-→ Link: https://economictimes.indiatimes.com/markets
+→ URL: https://economictimes.indiatimes.com/markets/stocks/stock-screener
 
 ### ET Wealth
-Personal finance: tax planning, MF selection, insurance, real estate. Weekly magazine (print + digital). Calculators and tools.
+Personal finance: tax planning, MF selection, insurance, real estate.
 → Best for: wealth builders, tax planners, first-time investors
-→ Link: https://economictimes.indiatimes.com/wealth
+→ URL: https://economictimes.indiatimes.com/wealth
+
+### ET Money SIP Calculator
+Calculate SIP returns, compare mutual funds, plan your investment journey.
+→ Best for: SIP planners, goal-based investors
+→ URL: https://www.etmoney.com/tools-and-calculators/sip-calculator
 
 ### ET Masterclasses (₹2K-15K/course)
-Online courses: leadership, AI, finance, marketing. Taught by CXOs and industry experts.
+Online courses: leadership, AI, finance, marketing.
 → Best for: professionals upskilling, aspiring leaders
-→ Link: https://etmasterclass.com/
+→ URL: https://etmasterclass.com/
 
 ### ET Now / ET Now Swadesh
-Business news TV channels. Live market coverage, expert panels, company earnings analysis.
-→ Best for: real-time market followers, Hindi-speaking investors
-
-### ET Startup Ecosystem
-Startup news, funding tracker, unicorn watchlist, founder interviews.
-→ Best for: founders, VCs, startup enthusiasts
-
-### Financial Services (ET Partnerships)
-Credit cards, loans, insurance, wealth management, demat accounts — all through ET-verified partners.
-→ Best for: anyone needing financial products with trusted partners
-
-### ET Events (CEO Roundtables, Wealth Summit, Awards)
-Exclusive networking, learning, and recognition events for business leaders.
+Business news TV channels. Live market coverage.
+→ Best for: real-time market followers
 
 ## CONVERSATION INTELLIGENCE
 
 ### Life Stage Auto-Detection
-Detect life events and shift your focus:
-| Signal | Response |
-| "just got married" | Joint planning, HRA optimization, joint insurance |
-| "expecting a baby" | Child education SIP, term insurance, health coverage |
-| "got promoted/new job" | Tax slab change alert, increment investment strategy |
-| "lost my job/laid off" | Emergency fund mode, expense reduction, liquid funds |
-| "retiring soon" | Pension planning, SWP setup, healthcare coverage |
-| "parents are aging" | Senior citizen schemes, health insurance, NPS |
-| "starting a business" | Business insurance, tax structure, cash flow planning |
+Detect life events: marriage, baby, promotion, job loss, retirement, aging parents, starting business.
 
 ### Cohort Benchmarking
-When you know enough about the user, compare them with their peer group:
-"People your age and income in [city] invest ₹X/month in SIPs. You invest ₹Y."
-"85% of IT professionals your age have term insurance. You don't."
-Use specific numbers. This creates social-proof motivation.
-
-### Proactive Nudges
-Suggest event-triggered actions:
-- "Budget season is coming — here's your tax-saving checklist"
-- "Based on your risk profile, here's our take on the latest IPO"
-- "Your SIP anniversary is coming up — time for a portfolio review"
+Compare users with peer groups using specific numbers for social-proof motivation.
 
 ### Trust Transparency
-Every recommendation must include WHY:
-"I'm suggesting ET Wealth because you mentioned tax confusion 3 times and your Financial Twin shows you're under-insured by ~60%. Confidence: 92%"
+Every recommendation must include WHY with a confidence score.
 
-## PROFILE EXTRACTION FORMAT
-After EVERY response, output a PROFILE_UPDATE block. This is CRITICAL — the frontend parses it to build the Financial Twin sidebar. Put it at the VERY END of your message.
+## CRITICAL OUTPUT FORMAT RULES
+
+You MUST follow these output rules EXACTLY:
+
+### Rule 1: twin_update JSON (EVERY response)
+At the END of every response, after your human-readable text, emit a JSON block:
+{"type":"twin_update","traits":{"age":null,"income":null,"city":null,"riskProfile":null,"lifeStage":null,"knowledgeLevel":null,"goals":null,"emotionalTriggers":null}}
+
+Fill in any traits you can infer from the conversation. Leave unknown traits as null. Examples:
+{"type":"twin_update","traits":{"age":"28","income":"18 LPA","city":"Bangalore","riskProfile":"Risk-averse","lifeStage":"Newly married","knowledgeLevel":"Beginner","goals":"Buy a house in 3 years","emotionalTriggers":"Fear of loss, FOMO from friends"}}
+
+### Rule 2: trust_card JSON (when recommending ET products)
+Whenever you recommend an ET product, emit a trust_card JSON AFTER your explanation:
+{"type":"trust_card","product":"ET Prime","url":"https://economictimes.indiatimes.com/prime","match":87,"reason":"Because you are risk-averse and need deep market analysis before investing"}
+
+The 4 main products and their URLs:
+1. ET Prime → {"type":"trust_card","product":"ET Prime","url":"https://economictimes.indiatimes.com/prime","match":90,"reason":"..."}
+2. ET Money SIP Calculator → {"type":"trust_card","product":"ET Money SIP Calculator","url":"https://www.etmoney.com/tools-and-calculators/sip-calculator","match":85,"reason":"..."}
+3. ET Markets Watchlist → {"type":"trust_card","product":"ET Markets Watchlist","url":"https://economictimes.indiatimes.com/markets/stocks/stock-screener","match":80,"reason":"..."}
+4. ET Wealth → {"type":"trust_card","product":"ET Wealth","url":"https://economictimes.indiatimes.com/wealth","match":88,"reason":"..."}
+
+### Rule 3: journey_map_ready (once, when twin is rich enough)
+When the twin has 5 or more known traits AND you have made at least one product recommendation, emit this string on its own line:
+journey_map_ready
+
+### Rule 4: PROFILE_UPDATE block (for backwards compatibility)
+Also emit the PROFILE_UPDATE block at the very end:
 
 <PROFILE_UPDATE>
 {
   "financialTwin": {
-    "age": null,
-    "income": null,
-    "city": null,
-    "profession": null,
-    "riskPsychology": null,
-    "spendingPersonality": null,
-    "knowledgeLevel": null,
-    "emotionalTriggers": [],
-    "insuranceGap": null,
-    "emergencyFundMonths": null,
-    "investmentStyle": null,
-    "lifeStage": null,
-    "goalTimeline": null
+    "age": null, "income": null, "city": null, "profession": null,
+    "riskPsychology": null, "spendingPersonality": null, "knowledgeLevel": null,
+    "emotionalTriggers": [], "insuranceGap": null, "emergencyFundMonths": null,
+    "investmentStyle": null, "lifeStage": null, "goalTimeline": null
   },
-  "emotionState": {
-    "detected": "neutral",
-    "mode": "normal",
-    "trigger": null
-  },
-  "goals": [],
-  "interests": [],
-  "riskProfile": null,
-  "recommendedProducts": [
-    {
-      "name": "Product Name",
-      "match": 95,
-      "reason": "Why",
-      "trustReason": "Specific evidence from conversation",
-      "confidence": 92
-    }
-  ],
-  "onboardingPath": [
-    {
-      "step": 1,
-      "title": "Step title",
-      "description": "What to do",
-      "product": "ET Product",
-      "link": "URL"
-    }
-  ],
-  "cohortInsight": null,
-  "proactiveNudge": null,
-  "silenceSignals": []
+  "emotionState": { "detected": "neutral", "mode": "normal", "trigger": null },
+  "goals": [], "interests": [], "riskProfile": null,
+  "recommendedProducts": [],
+  "onboardingPath": [],
+  "cohortInsight": null, "proactiveNudge": null, "silenceSignals": []
 }
 </PROFILE_UPDATE>
 
@@ -157,11 +125,11 @@ After EVERY response, output a PROFILE_UPDATE block. This is CRITICAL — the fr
 7. Every recommendation needs a confidence score and trust reason
 8. Reference real ET links when suggesting products
 9. If detecting emotional distress, prioritize calming over selling
-10. ALWAYS include the PROFILE_UPDATE JSON block at the end`;
+10. ALWAYS include the twin_update JSON and PROFILE_UPDATE block at the end of EVERY response`;
 
 export async function POST(request) {
   try {
-    const { messages, silenceData } = await request.json();
+    const { messages, silenceData, existingTwin } = await request.json();
 
     if (!NVIDIA_API_KEY) {
       return NextResponse.json(
@@ -170,8 +138,12 @@ export async function POST(request) {
       );
     }
 
-    // Inject context data
     let contextMessage = "";
+
+    if (existingTwin && Object.keys(existingTwin).length > 0) {
+      contextMessage += `\n\nEXISTING FINANCIAL TWIN DATA: ${JSON.stringify(existingTwin)}. Use this as the user's profile. Do not re-ask questions already answered. Build on what you already know.`;
+    }
+
     if (silenceData && silenceData.length > 0) {
       contextMessage += `\n[SILENCE INTELLIGENCE DATA: User has shown disinterest in these topics: ${silenceData.join(", ")}. Deprioritize these in recommendations.]`;
     }
@@ -219,11 +191,45 @@ export async function POST(request) {
     const data = await response.json();
     const content = data.choices?.[0]?.message?.content || "";
 
-    // Parse out profile update — multiple strategies for robustness
     let displayContent = content;
     let profileUpdate = null;
+    let twinUpdate = null;
+    let trustCards = [];
+    let journeyMapReady = false;
 
-    // Strategy 1: XML-tagged format (with optional asterisks/markdown around tags)
+    // Extract twin_update JSON blocks
+    const twinUpdateRegex = /\{"type"\s*:\s*"twin_update"[^}]*"traits"\s*:\s*\{[^}]*\}\s*\}/g;
+    let twinMatch;
+    while ((twinMatch = twinUpdateRegex.exec(content)) !== null) {
+      try {
+        const parsed = JSON.parse(twinMatch[0]);
+        if (parsed.type === "twin_update" && parsed.traits) {
+          twinUpdate = parsed.traits;
+          displayContent = displayContent.replace(twinMatch[0], "");
+        }
+      } catch (e) { /* skip malformed */ }
+    }
+
+    // Extract trust_card JSON blocks
+    const trustCardRegex = /\{"type"\s*:\s*"trust_card"[^}]*\}/g;
+    let trustMatch;
+    while ((trustMatch = trustCardRegex.exec(content)) !== null) {
+      try {
+        const parsed = JSON.parse(trustMatch[0]);
+        if (parsed.type === "trust_card") {
+          trustCards.push(parsed);
+          displayContent = displayContent.replace(trustMatch[0], "");
+        }
+      } catch (e) { /* skip malformed */ }
+    }
+
+    // Detect journey_map_ready
+    if (content.includes("journey_map_ready")) {
+      journeyMapReady = true;
+      displayContent = displayContent.replace(/journey_map_ready/g, "");
+    }
+
+    // Parse PROFILE_UPDATE (existing format for backward compat)
     const xmlPatterns = [
       /<PROFILE_UPDATE>\s*([\s\S]*?)\s*<\/PROFILE_UPDATE>/i,
       /\*?\*?\s*<PROFILE_UPDATE>\s*\*?\*?\s*([\s\S]*?)\s*\*?\*?\s*<\/PROFILE_UPDATE>\s*\*?\*?/i,
@@ -238,40 +244,35 @@ export async function POST(request) {
         try {
           const jsonStr = match[1].trim();
           profileUpdate = JSON.parse(jsonStr);
-          displayContent = content.replace(match[0], "").trim();
+          displayContent = displayContent.replace(match[0], "").trim();
         } catch (e) {
-          // Try to extract just the JSON object from the match
           const jsonObj = match[1].match(/(\{[\s\S]*\})/);
           if (jsonObj) {
             try {
               profileUpdate = JSON.parse(jsonObj[1]);
-              displayContent = content.replace(match[0], "").trim();
-            } catch (e2) { /* continue to next strategy */ }
+              displayContent = displayContent.replace(match[0], "").trim();
+            } catch (e2) { /* continue */ }
           }
         }
       }
     }
 
-    // Strategy 2: Find any JSON block containing financialTwin key anywhere in the response
     if (!profileUpdate) {
-      // Find all JSON-like blocks
       const jsonBlocks = content.match(/\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/g) || [];
       for (const block of jsonBlocks) {
         if (block.includes('"financialTwin"') || block.includes('"emotionState"') || block.includes('"recommendedProducts"')) {
           try {
             profileUpdate = JSON.parse(block);
-            displayContent = content.replace(block, "").trim();
+            displayContent = displayContent.replace(block, "").trim();
             break;
-          } catch(e) { /* try next block */ }
+          } catch(e) { /* try next */ }
         }
       }
     }
 
-    // Strategy 3: Find deeply nested JSON (brace counting)
     if (!profileUpdate) {
       const ftIdx = content.indexOf('"financialTwin"');
       if (ftIdx > -1) {
-        // Walk backwards to find opening brace
         let start = content.lastIndexOf('{', ftIdx);
         if (start > -1) {
           let depth = 0;
@@ -289,35 +290,15 @@ export async function POST(request) {
       }
     }
 
-    // Strategy 4: Legacy format with investorType
-    if (!profileUpdate) {
-      const ftIdx = content.indexOf('"investorType"');
-      if (ftIdx > -1) {
-        let start = content.lastIndexOf('{', ftIdx);
-        if (start > -1) {
-          let depth = 0; let end = start;
-          for (let i = start; i < content.length; i++) {
-            if (content[i] === '{') depth++;
-            else if (content[i] === '}') { depth--; if (depth === 0) { end = i + 1; break; } }
-          }
-          try {
-            profileUpdate = JSON.parse(content.substring(start, end));
-            displayContent = content.substring(0, start).trim();
-          } catch(e) { /* ignore */ }
-        }
-      }
-    }
-
-    // Clean up display content thoroughly
+    // Clean up display content
     displayContent = displayContent
       .replace(/<\/?PROFILE_UPDATE>/gi, "")
       .replace(/PROFILE_UPDATE\s*remains[^.]*\.?/gi, "")
       .replace(/PROFILE_UPDATE/gi, "")
       .replace(/```json[\s\S]*?```/g, "")
       .replace(/\*\*\s*$/g, "")
+      .replace(/^\s*\n/gm, "\n")
       .trim();
-
-    console.log("Profile extracted:", profileUpdate ? "YES" : "NO", profileUpdate ? Object.keys(profileUpdate) : "");
 
     // Save twin to database if authenticated
     if (profileUpdate && profileUpdate.financialTwin) {
@@ -331,6 +312,9 @@ export async function POST(request) {
     return NextResponse.json({
       message: displayContent,
       profileUpdate,
+      twinUpdate,
+      trustCards,
+      journeyMapReady,
     });
   } catch (error) {
     console.error("Chat API error:", error);

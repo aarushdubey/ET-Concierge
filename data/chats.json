@@ -1,0 +1,58 @@
+[
+  {
+    "id": "1774711078431mrym4",
+    "userId": "1774711040521jqjkn15",
+    "title": "Hello, how are you?",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Hello, how are you?",
+        "timestamp": "2026-03-28T15:17:43.700Z"
+      },
+      {
+        "role": "assistant",
+        "content": "Hello, I'm here to help. I'm an AI concierge, so I don't have emotions like humans do, but I'm always ready to assist you with any questions or concerns you might have about your finances. How about you? How's your day going so far? 😊",
+        "timestamp": "2026-03-28T15:17:58.217Z",
+        "emotionMode": "normal"
+      }
+    ],
+    "createdAt": "2026-03-28T15:17:58.432Z",
+    "updatedAt": "2026-03-28T15:17:58.432Z"
+  },
+  {
+    "id": "1774711228676w4ysp",
+    "userId": "1774544633151ryeaeuv",
+    "title": "my income is 5000000 help me to invest",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Welcome back, Shivika Jain! Your twin remembers you. 🧬 I already know 1 things about your financial profile. Let's pick up where we left off — what's on your mind today?",
+        "timestamp": "2026-03-28T15:19:13.163Z"
+      },
+      {
+        "role": "user",
+        "content": "my income is 5000000 help me to invest",
+        "timestamp": "2026-03-28T15:20:10.784Z"
+      },
+      {
+        "role": "assistant",
+        "content": "Congratulations on your income, Shivika. 🎉 With ₹50,00,000, you have a great opportunity to create a solid investment portfolio.\n\nBefore I suggest any investment options, I want to understand your risk profile. Since I don't have that information yet, I'll ask a few questions to help me gauge your risk tolerance.\n\nAre you comfortable with the possibility of losing some or all of your investment in pursuit of higher returns, or do you prefer more conservative investments with lower potential returns?\n\nPlease respond with one of the following:\n\n1. I'm comfortable with taking risks for higher returns.\n2. I'm moderate and willing to take some risks, but also want to protect my capital.\n3. I'm conservative and prefer low-risk investments.\n\nThis will help me provide you with a more tailored recommendation.",
+        "timestamp": "2026-03-28T15:20:28.651Z",
+        "emotionMode": "normal"
+      },
+      {
+        "role": "user",
+        "content": "1",
+        "timestamp": "2026-03-28T15:20:37.939Z"
+      },
+      {
+        "role": "assistant",
+        "content": "You're comfortable with taking calculated risks for potentially higher returns. 💸 That's a great attitude for investing. Based on your income and risk profile, I'd like to suggest a diversified investment portfolio that balances risk and potential returns.\n\nBefore I dive into specific investment options, I want to highlight the importance of having an emergency fund in place. This fund should cover 3-6 months of your living expenses in case of unexpected events. Considering your income, I recommend allocating ₹15,00,000 to ₹30,00,000 towards your emergency fund.\n\nNow, let's explore some investment options:\n\n1. **Equity Mutual Funds**: These funds invest in stocks and have the potential for higher returns over the long term. I recommend allocating 40% of your investment portfolio to equity mutual funds.\n2. **Debt Mutual Funds**: These funds invest in fixed-income securities and provide relatively stable returns. I suggest allocating 30% of your portfolio to debt mutual funds.\n3. **Real Estate**: Investing in real estate can provide a steady income stream and potentially higher returns over the long term. You can consider allocating 20% of your portfolio to real estate investments.\n4. **Alternative Investments**: This can include investments like gold, cryptocurrencies, or private equity. I recommend allocating 10% of your portfolio to alternative investments.\n\nTo get started with investing, I recommend exploring the following ET products:\n\n* **ET Money SIP Calculator**: This tool can help you calculate the potential returns on your investments and create a systematic investment plan. \n* **ET Markets Watchlist**: This feature allows you to track your investments and stay up-to-date with market news. \n\nPlease let me know if you have any questions or if there's anything else I can help you with.",
+        "timestamp": "2026-03-28T15:21:19.631Z",
+        "emotionMode": "normal"
+      }
+    ],
+    "createdAt": "2026-03-28T15:20:28.676Z",
+    "updatedAt": "2026-03-28T15:21:19.746Z"
+  }
+]

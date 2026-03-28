@@ -1,45 +1,73 @@
 import { NextResponse } from "next/server";
-
-// Simulated market data — in production, connect to NSE WebSocket or Yahoo Finance API
-const MARKET_DATA = {
-  sensex: { name: "SENSEX", value: 73892.45, change: -1.2, prev: 74790.12 },
-  nifty: { name: "NIFTY 50", value: 22420.15, change: -0.9, prev: 22623.85 },
-  niftyBank: { name: "BANK NIFTY", value: 47125.30, change: -1.5, prev: 47842.10 },
-  gold: { name: "GOLD", value: 71250, change: 0.8, prev: 70685 },
-  usdInr: { name: "USD/INR", value: 84.92, change: 0.15, prev: 84.79 },
-};
-
-function getRandomFluctuation(base, maxPercent = 0.3) {
-  const fluctuation = (Math.random() - 0.5) * 2 * (maxPercent / 100) * base;
-  return +(base + fluctuation).toFixed(2);
-}
+import yahooFinance from "yahoo-finance2";
 
 export async function GET() {
-  // Add small random fluctuations to simulate live data
-  const liveData = {};
-  for (const [key, data] of Object.entries(MARKET_DATA)) {
-    const newValue = getRandomFluctuation(data.value);
-    const change = +(((newValue - data.prev) / data.prev) * 100).toFixed(2);
-    liveData[key] = {
-      ...data,
-      value: newValue,
-      change,
-      timestamp: new Date().toISOString(),
-    };
-  }
+  try {
+    // Suppress yahoo warnings to keep console clean
+    yahooFinance.suppressNotices(['yahooSurvey']);
 
-  // Generate market alert if significant movement
-  let alert = null;
-  if (Math.abs(liveData.sensex.change) > 1) {
-    alert = {
-      type: liveData.sensex.change < 0 ? "dip" : "rally",
-      message:
-        liveData.sensex.change < 0
-          ? `Sensex is down ${Math.abs(liveData.sensex.change).toFixed(1)}% today. Don't panic — let me check how this affects your portfolio.`
-          : `Markets rallying! Sensex up ${liveData.sensex.change.toFixed(1)}%. Good time to review your investment targets.`,
-      severity: Math.abs(liveData.sensex.change) > 2 ? "high" : "medium",
-    };
-  }
+    const symbols = ["^BSESN", "^NSEI", "^NSEBANK", "GC=F", "INR=X"];
+    const quotes = await Promise.all(
+      symbols.map((s) => yahooFinance.quote(s).catch(() => null))
+    );
 
-  return NextResponse.json({ data: liveData, alert });
+    const liveData = {};
+    const symbolMap = {
+      "^BSESN": { key: "sensex", name: "SENSEX" },
+      "^NSEI": { key: "nifty", name: "NIFTY 50" },
+      "^NSEBANK": { key: "niftyBank", name: "BANK NIFTY" },
+      "GC=F": { key: "gold", name: "GOLD" },
+      "INR=X": { key: "usdInr", name: "USD/INR" },
+    };
+
+    quotes.forEach((q) => {
+      if (q && symbolMap[q.symbol]) {
+        const mapping = symbolMap[q.symbol];
+        liveData[mapping.key] = {
+          name: mapping.name,
+          value: q.regularMarketPrice,
+          change: q.regularMarketChangePercent,
+          prev: q.regularMarketPreviousClose,
+        };
+      }
+    });
+
+    // If Yahoo finance fetch completely failed or was empty, throw to trigger fallback
+    if (Object.keys(liveData).length === 0) {
+      throw new Error("Yahoo Finance returned no data");
+    }
+
+    let alert = null;
+    if (liveData.sensex && Math.abs(liveData.sensex.change) > 1) {
+      alert = {
+        type: liveData.sensex.change < 0 ? "dip" : "rally",
+        message: liveData.sensex.change < 0
+            ? `Sensex is down ${Math.abs(liveData.sensex.change).toFixed(1)}% today. Don't panic — let me check how this affects your portfolio.`
+            : `Markets rallying! Sensex up ${liveData.sensex.change.toFixed(1)}%. Good time to review your investment targets.`,
+        severity: Math.abs(liveData.sensex.change) > 2 ? "high" : "medium",
+      };
+    }
+
+    return NextResponse.json({ data: liveData, alert });
+  } catch (error) {
+    console.warn("Market API fallback triggered:", error.message || error);
+    
+    // Fallback static data simulator for reliable demos
+    const fallbackData = {
+      sensex: { name: "SENSEX", value: 73502.6, change: 1.25, prev: 72593.1 },
+      nifty: { name: "NIFTY 50", value: 22332.65, change: 1.3, prev: 22045.2 },
+      niftyBank: { name: "BANK NIFTY", value: 47805.4, change: 0.85, prev: 47402.1 },
+      gold: { name: "GOLD", value: 65201.0, change: -0.45, prev: 65495.0 },
+      usdInr: { name: "USD/INR", value: 82.85, change: -0.1, prev: 82.93 },
+    };
+    
+    return NextResponse.json({ 
+      data: fallbackData, 
+      alert: {
+        type: "rally",
+        message: "Markets rallying! Sensex up 1.25%. Good time to review your investment targets.",
+        severity: "medium"
+      }
+    });
+  }
 }
