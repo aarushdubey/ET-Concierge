@@ -1,0 +1,30 @@
+[
+  {
+    "title": "AI for Business Leaders Masterclass",
+    "description": "Learn how to strategize and implement Generative AI across your organization to drive exponential growth and efficiency.",
+    "url": "https://etmasterclass.com/course/ai-business-leaders",
+    "price": "₹12,499",
+    "duration": "10 Hours"
+  },
+  {
+    "title": "Business Negotiation Strategies for Success",
+    "description": "Master the art of high-stakes corporate negotiation. Learn psychology-driven techniques to win boardrooms.",
+    "url": "https://etmasterclass.com/course/business-negotiation",
+    "price": "₹8,500",
+    "duration": "8 Hours"
+  },
+  {
+    "title": "Strategic Leadership for Exponential Business Growth",
+    "description": "Develop advanced leadership frameworks and decision-making skills to scale your business internationally.",
+    "url": "https://etmasterclass.com/course/strategic-leadership",
+    "price": "₹15,000",
+    "duration": "12 Hours"
+  },
+  {
+    "title": "FinTech and Digital Banking Innovation",
+    "description": "Explore the future of payments, blockchain, and regulatory compliance in modern banking.",
+    "url": "https://etmasterclass.com/course/fintech-digital-banking",
+    "price": "₹9,999",
+    "duration": "6 Hours"
+  }
+]

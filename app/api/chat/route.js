@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { updateUserTwinData } from "@/lib/db";
 
 const NVIDIA_API_KEY = process.env.NVIDIA_API_KEY;
 const NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
@@ -47,6 +49,7 @@ Personal finance: tax planning, MF selection, insurance, real estate. Weekly mag
 ### ET Masterclasses (₹2K-15K/course)
 Online courses: leadership, AI, finance, marketing. Taught by CXOs and industry experts.
 → Best for: professionals upskilling, aspiring leaders
+→ Link: https://etmasterclass.com/
 
 ### ET Now / ET Now Swadesh
 Business news TV channels. Live market coverage, expert panels, company earnings analysis.
@@ -167,10 +170,20 @@ export async function POST(request) {
       );
     }
 
-    // Inject silence data if available
+    // Inject context data
     let contextMessage = "";
     if (silenceData && silenceData.length > 0) {
-      contextMessage = `\n[SILENCE INTELLIGENCE DATA: User has shown disinterest in these topics: ${silenceData.join(", ")}. Deprioritize these in recommendations.]`;
+      contextMessage += `\n[SILENCE INTELLIGENCE DATA: User has shown disinterest in these topics: ${silenceData.join(", ")}. Deprioritize these in recommendations.]`;
+    }
+
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const dataPath = path.join(process.cwd(), "data", "masterclasses.json");
+      const masterclassDataset = fs.readFileSync(dataPath, "utf-8");
+      contextMessage += `\n\n[LIVE MASTERCLASS DATASET: You MUST only recommend the following specific ET Masterclasses. Do NOT generate fake URLs or course names. If recommending a course, format the link exactly as provided here:\n${masterclassDataset}\n]`;
+    } catch (e) {
+      console.error("Failed to load local dataset", e);
     }
 
     const apiMessages = [
@@ -305,6 +318,15 @@ export async function POST(request) {
       .trim();
 
     console.log("Profile extracted:", profileUpdate ? "YES" : "NO", profileUpdate ? Object.keys(profileUpdate) : "");
+
+    // Save twin to database if authenticated
+    if (profileUpdate && profileUpdate.financialTwin) {
+      const cookieStore = await cookies();
+      const sessionId = cookieStore.get("session_id")?.value;
+      if (sessionId) {
+        updateUserTwinData(sessionId, profileUpdate.financialTwin);
+      }
+    }
 
     return NextResponse.json({
       message: displayContent,

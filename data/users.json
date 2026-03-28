@@ -1,0 +1,24 @@
+[
+  {
+    "id": "1774544633151ryeaeuv",
+    "name": "Shivika Jain",
+    "email": "shivikaj47@gmail.com",
+    "passwordHash": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "createdAt": "2026-03-26T17:03:53.151Z",
+    "financialTwin": {
+      "age": null,
+      "income": null,
+      "city": null,
+      "profession": null,
+      "riskPsychology": null,
+      "spendingPersonality": null,
+      "knowledgeLevel": null,
+      "emotionalTriggers": [],
+      "insuranceGap": null,
+      "emergencyFundMonths": null,
+      "investmentStyle": null,
+      "lifeStage": null,
+      "goalTimeline": null
+    }
+  }
+]
