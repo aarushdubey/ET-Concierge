@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { updateUserTwinData } from "@/lib/db";
 
+// AI Config - Prioritizing Groq for lowest latency (Hackathon requirement)
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const NVIDIA_API_KEY = process.env.NVIDIA_API_KEY;
-const NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
 
 const SYSTEM_PROMPT = `You are the **ET Concierge** — a warm, emotionally intelligent AI financial companion for The Economic Times (ET) ecosystem. You are NOT a generic chatbot. You are the most advanced AI concierge in Indian fintech.
 
@@ -131,9 +132,13 @@ export async function POST(request) {
   try {
     const { messages, silenceData, existingTwin } = await request.json();
 
-    if (!NVIDIA_API_KEY) {
+    const API_KEY = GROQ_API_KEY || NVIDIA_API_KEY;
+    const API_URL = GROQ_API_KEY ? "https://api.groq.com/openai/v1/chat/completions" : "https://integrate.api.nvidia.com/v1/chat/completions";
+    const API_MODEL = GROQ_API_KEY ? "llama-3.3-70b-versatile" : "meta/llama-3.1-70b-instruct";
+
+    if (!API_KEY) {
       return NextResponse.json(
-        { error: "NVIDIA API key not configured" },
+        { error: "AI Provider API key not configured (Need GROQ_API_KEY or NVIDIA_API_KEY)" },
         { status: 500 }
       );
     }
@@ -163,14 +168,14 @@ export async function POST(request) {
       ...messages,
     ];
 
-    const response = await fetch(NVIDIA_API_URL, {
+    const response = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${NVIDIA_API_KEY}`,
+        Authorization: `Bearer ${API_KEY}`,
       },
       body: JSON.stringify({
-        model: "meta/llama-3.1-70b-instruct",
+        model: API_MODEL,
         messages: apiMessages,
         temperature: 0.7,
         top_p: 0.9,

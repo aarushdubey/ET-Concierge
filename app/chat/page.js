@@ -1,6 +1,8 @@
 "use client";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { Mail, CheckCircle2, Send, Mic, MicOff } from "lucide-react";
 
 const QUICK_ACTIONS = [
   { icon:"📈", title:"I want to start investing", desc:"Get personalized guidance for your investment journey",
@@ -72,6 +74,10 @@ export default function Home() {
   // Journey map
   const [showJourneyMap, setShowJourneyMap] = useState(false);
   const [journeyReasons, setJourneyReasons] = useState([]);
+
+  // Email state
+  const [isEmailing, setIsEmailing] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
   // Market data & RSS
   const [marketData, setMarketData] = useState(null);
@@ -459,6 +465,23 @@ export default function Home() {
     setInlineTrustCards([]); setShowJourneyMap(false); setShowModal(false);
   };
 
+  const handleSendEmail = async () => {
+    setIsEmailing(true);
+    try {
+      await fetch("/api/email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ twinData: twinTraits, email: user?.email })
+      });
+      setEmailSent(true);
+      setTimeout(() => setEmailSent(false), 4000);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsEmailing(false);
+    }
+  };
+
   const hasTwin = financialTwin && Object.values(financialTwin).some(v => v !== null && v !== undefined && (!Array.isArray(v) || v.length > 0));
   const twinProgress = getTwinProgress();
   // Client-side initialization for initials to avoid hydration mismatch
@@ -767,8 +790,14 @@ export default function Home() {
               </div>
             ) : (
               <>
-                {messages.map((msg,i) => (
-                  <div key={i}>
+                <AnimatePresence>
+                  {messages.map((msg,i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <div className={`message ${msg.role}`}>
                       <div className="message-avatar">{msg.role==="assistant" ? "🧬" : "👤"}</div>
                       <div>
@@ -783,7 +812,13 @@ export default function Home() {
                     </div>
                     {/* UPGRADE 3: Inline Trust Cards */}
                     {msg.trustCards?.length > 0 && msg.trustCards.map((tc, tci) => (
-                      <div key={tci} className="inline-trust-card">
+                      <motion.div 
+                        key={tci} 
+                        className="inline-trust-card"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.4, delay: 0.1 }}
+                      >
                         <div className="itc-header">
                           <div className="itc-logo">ET</div>
                           <div className="itc-product">{tc.product}</div>
@@ -797,10 +832,11 @@ export default function Home() {
                           <a href={tc.url} target="_blank" rel="noopener noreferrer" className="itc-btn itc-btn-primary">Learn more on ET</a>
                           <button className="itc-btn itc-btn-secondary" onClick={() => sendMessage(`Tell me more about ${tc.product} and is it right for me?`)}>Ask my twin →</button>
                         </div>
-                      </div>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 ))}
+              </AnimatePresence>
                 {isLoading && (
                   <div className="typing-indicator">
                     <div className="message-avatar">🧬</div>
@@ -810,8 +846,24 @@ export default function Home() {
 
                 {/* UPGRADE 2: Journey Map */}
                 {shouldShowJourney() && (
-                  <div className="journey-map-container">
-                    <div className="journey-map-title">🗺️ Your Personalized ET Journey</div>
+                  <motion.div 
+                    className="journey-map-container"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <div className="journey-map-title">
+                      <div>🗺️ Your Personalized ET Journey</div>
+                      <button 
+                        onClick={handleSendEmail} 
+                        disabled={isEmailing || emailSent}
+                        className="email-handoff-btn"
+                        style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12px", padding: "6px 12px", borderRadius: "20px", background: emailSent ? "#22c55e" : "#ffeed8", color: emailSent ? "white" : "#d97706", border: "none", cursor: "pointer", transition: "all 0.2s" }}
+                      >
+                        {emailSent ? <CheckCircle2 size={14} /> : <Mail size={14} />}
+                        {emailSent ? "Email Sent!" : isEmailing ? "Sending..." : "Email My Summary"}
+                      </button>
+                    </div>
                     <div className="journey-map-stepper">
                       {JOURNEY_STEPS.map((step, i) => (
                         <div key={i} className={`journey-step ${i === 0 ? "step-active" : ""}`}>
@@ -832,7 +884,7 @@ export default function Home() {
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </motion.div>
                 )}
               </>
             )}
@@ -860,9 +912,11 @@ export default function Home() {
               <textarea ref={textareaRef} value={input} onChange={e => setInput(e.target.value)} onKeyDown={handleKey}
                         placeholder={isRecording ? "🎤 Listening..." : "Tell me about yourself, your goals..."} rows={1} disabled={isLoading} />
               <button className={`voice-btn ${isRecording ? "recording" : ""}`} onClick={toggleVoice} title="Voice input">
-                {isRecording ? "⏹" : "🎤"}
+                {isRecording ? <MicOff size={18} /> : <Mic size={18} />}
               </button>
-              <button className="send-btn" onClick={() => sendMessage(input)} disabled={!input.trim() || isLoading}>➤</button>
+              <button className="send-btn" onClick={() => sendMessage(input)} disabled={!input.trim() || isLoading}>
+                <Send size={18} />
+              </button>
             </div>
             <div className="input-hints">
               <span>Powered by NVIDIA AI • Financial Twin Engine</span>
