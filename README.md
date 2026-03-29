@@ -21,6 +21,10 @@
     An AI-powered Financial Twin built for The Economic Times ecosystem.<br/>
     <strong>Zero static questionnaires. 100% conversation-driven personalization.</strong>
     <br/><br/>
+    <a href="https://youtu.be/-H7DZOUcolM?si=UAGWT9GT7QqNVLQC"> View Demo</a>
+    ·
+    <a href="./OffShift — Smart Income Shield _ Guidewire DEVTrails 2026.pdf"> View Presentation</a>
+    .
     <a href="https://github.com/aarushdubey/ET-Concierge/issues"> Report Bug</a>
     ·
     <a href="https://github.com/aarushdubey/ET-Concierge/pulls"> Request Feature</a>
