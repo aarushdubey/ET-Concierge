@@ -21,8 +21,6 @@
     An AI-powered Financial Twin built for The Economic Times ecosystem.<br/>
     <strong>Zero static questionnaires. 100% conversation-driven personalization.</strong>
     <br/><br/>
-    <a href=> View Demo</a>
-    .
     <a href="https://github.com/aarushdubey/ET-Concierge/issues"> Report Bug</a>
     ·
     <a href="https://github.com/aarushdubey/ET-Concierge/pulls"> Request Feature</a>
