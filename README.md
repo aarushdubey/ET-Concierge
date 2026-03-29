@@ -25,7 +25,7 @@
     ·
     <a href="https://github.com/aarushdubey/ET-Concierge/pulls"> Request Feature</a>
     .
-    Project (try out link): [https://et-concierge.onrender.com/](https://et-concierge.onrender.com/)
+    Project (try out link): (https://et-concierge.onrender.com/)
   </p>
 </div>
 
