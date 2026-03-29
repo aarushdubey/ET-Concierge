@@ -7,17 +7,19 @@
     "createdAt": "2026-03-26T17:03:53.151Z",
     "financialTwin": {
       "age": 21,
-      "income": 5000000,
+      "income": "50 lakhs",
       "city": null,
       "profession": null,
       "riskPsychology": "Aggressive",
       "spendingPersonality": null,
-      "knowledgeLevel": null,
-      "emotionalTriggers": [],
+      "knowledgeLevel": "Beginner",
+      "emotionalTriggers": [
+        "Fear of missing out"
+      ],
       "insuranceGap": null,
       "emergencyFundMonths": null,
       "investmentStyle": null,
-      "lifeStage": null,
+      "lifeStage": "Young adult",
       "goalTimeline": null
     }
   },
